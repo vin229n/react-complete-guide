@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person'
+import Person from './Person/Person';
+
 
 class App extends Component {
   state ={
@@ -51,11 +52,7 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor : 'white',
-      font : 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor : 'pointer'
+      
     };
 
     let Persons = null;
@@ -73,14 +70,32 @@ class App extends Component {
           })}
         </div>
       );
+      style['backgroundColor'] = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
 
+    let classes = [];
+
+    if(this.state.persons.length <= 2){
+      classes.push('red')
+    }
+
+    if(this.state.persons.length <=1){
+      classes.push('bold')
+    }
+
+    
     return (
-      <div className="App">
-        <h1>Hi welocme to react</h1>
-        <button style={style} onClick={this.toglePersonsHandler}>click</button>
-        {Persons}
-      </div>
+      
+        <div className="App">
+          <h1>Hi I am react app</h1>
+          <p className={classes.join(' ')}>This is really working!</p>
+          <button alt={this.state.showPersons} onClick={this.toglePersonsHandler}>Toggle Persons</button>
+          {Persons}
+        </div>
     );
     
   }
