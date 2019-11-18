@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
-import Person from './Person/Person';
+import classes from './App.css';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 
 class App extends Component {
@@ -27,7 +28,7 @@ class App extends Component {
 
   nameChangedHandler = (event,id) => {
     const personIndex = this.state.persons.findIndex( p => {
-      return p.id == id;
+      return p.id === id;
     })
 
     const person = {...this.state.persons[personIndex]};
@@ -51,53 +52,26 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      
-    };
-
-    let Persons = null;
+  
+    let persons = null;
 
     if(this.state.showPersons) {
-      Persons = (
-        <div >
-          {this.state.persons.map( (person,index) => {
-            return <Person
-              click={() => this.deletePersonHandler(index)}
-              name= {person.name}
-              age= {person.age}
-              changed={(event) =>{ this.nameChangedHandler(event,person.id)}}
-              key={person.id}/>
-          })}
-        </div>
-      );
-      style['backgroundColor'] = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
+      persons = <Persons
+                  persons = {this.state.persons}
+                  clicked = {this.deletePersonHandler}  
+                  changed = {this.nameChangedHandler}
+                />
     }
 
-    let classes = [];
-
-    if(this.state.persons.length <= 2){
-      classes.push('red')
-    }
-
-    if(this.state.persons.length <=1){
-      classes.push('bold')
-    }
-
-    
-    return (
-      
-        <div className="App">
-          <h1>Hi I am react app</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
-          <button alt={this.state.showPersons} onClick={this.toglePersonsHandler}>Toggle Persons</button>
-          {Persons}
+    return (  
+        <div className={classes.App}>
+          <Cockpit 
+            showPersons = {this.state.showPersons}
+            persons = {this.state.persons}
+            clicked = {this.toglePersonsHandler}/>
+          {persons}
         </div>
     );
-    
   }
 }
 
